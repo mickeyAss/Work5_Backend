@@ -27,7 +27,7 @@ router.post("/insert", (req, res) => {
 });
 
 //ลบข้อมูลหนัง
-router.delete("/:mid", (req, res) => {
+router.delete("/delete/:mid", (req, res) => {
   let mid = +req.params.mid;
   conn.query("DELETE FROM movie where mid = ?", [mid], (err, result) => {
     if (err) throw err;
@@ -35,7 +35,7 @@ router.delete("/:mid", (req, res) => {
   });
 });
 
-//ค้นหาข้อมูลหนังจากส่วนใดส่วนนึง
+//ข้อมูลหนังพร้อมดาราและผู้สร้าง
 router.get("/getdata", (req, res) => {
   const sql = `SELECT movie.*, GROUP_CONCAT(DISTINCT person.pid,' ',person.pname,' ',person.pimage,' ',person.ptype,' ',person.pbirthday) AS actors,
         GROUP_CONCAT(DISTINCT CONCAT(creator_person.pid, ' ' ,creator_person.pname,' ',creator_person.pimage,' ',creator_person.ptype,' ',creator_person.pbirthday)) AS creator
@@ -78,6 +78,7 @@ router.get("/getdata", (req, res) => {
   });
 });
 
+//ค้นหาจากส่วยใดส่วนหนึ่งของหนัง
 router.get("/search/fields", (req, res) => {
 
   const sql = `SELECT movie.*, GROUP_CONCAT(DISTINCT person.pid,' ',person.pname,' ',person.pimage,' ',person.ptype,' ',person.pbirthday) AS actors,
