@@ -99,7 +99,7 @@ router.get("/search/fields", (req, res) => {
       const movie: Movie[] = result.map((row: Movie) => {
         return {
           mid: row.mid,
-          title: row.title,
+          title: row.title, 
           year: row.year,
           type: row.type,
           poster: row.poster,
